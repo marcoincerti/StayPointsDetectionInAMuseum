@@ -11,11 +11,11 @@ def resetInterestingExhibits():
     print("RESETTING PREVIOUS RESULTS")
     cur = conn.cursor()
 
-    
+
     people = [57, 67, 68]
     for p in people:
         cur.execute("drop table if exists exhibits_person_" + str(p))
-    
+
 
     conn.commit()
     cur.close()

@@ -134,7 +134,7 @@ def stayPointDetectionAlgorithm(ptraj, distThres = 1, timeThres = 30):
         token = 0
         while j < pointNum:
             dist = math.dist([points[i].x, points[i].y], [points[j].x, points[j].y])
-            
+
             if dist > float(distThres):
                 t_i = time.mktime(datetime.strptime(points[i].timestamp[:18], "%Y/%m/%d %H:%M:%S").timetuple())
                 t_j = time.mktime(datetime.strptime(points[j].timestamp[:18], "%Y/%m/%d %H:%M:%S").timetuple())
@@ -162,7 +162,7 @@ def saveStayPoints(n_person, stay_points):
         'geom geometry, ' \
         'arrivTime time, '\
         'leaveTime time )' )
-    
+
     #sql_insert_query = 'INSERT INTO stay_points_'+ str(n_person) + ' '\
     #    '(geom, arrivTime, leaveTime, duration) VALUES (ST_Point(%s,%s), %s, %s, %s)'
 
@@ -170,7 +170,7 @@ def saveStayPoints(n_person, stay_points):
         cur.execute('INSERT INTO stay_points_'+ str(n_person) + ' '\
         '(id, geom, arrivTime, leaveTime) VALUES (%(id)s, ST_SetSRID(ST_Point(%(x)s,%(y)s)::geometry, 3003), %(arrivTime)s, %(leaveTime)s)',
         {'id': p.id, 'x': p.x, 'y': p.y, 'arrivTime': p.arrivTime, 'leaveTime': p.leaveTime})
-    
+
     #cur.executemany(sql_insert_query, [stay_points])
     conn.commit()
     cur.close()
@@ -188,5 +188,5 @@ for p in people:
     points = getPoints(p)
     stay_points = stayPointDetectionAlgorithm(points)
     saveStayPoints(p, stay_points)
-    
+
 conn.close()
