@@ -1,6 +1,5 @@
 import psycopg2
 import numpy as np
-from scipy import spatial
 import similaritymeasures
 
 def getPoints(n_person):
